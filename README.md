@@ -1,5 +1,4 @@
 
-```markdown
 # DB Diagram Generator
 
 A web-based DB Diagram Generator with an integrated editor that allows you to define, visualize, and interact with DB diagrams. The project features robust syntax highlighting (using CodeMirror), drag‐and‐drop table positioning (powered by jsPlumb), manual version saving with an optional comment modal, file upload/download functionality, zoom controls, and PNG export.
@@ -136,4 +135,3 @@ These libraries are loaded via script tags in `index.html`. No local installatio
 - [CodeMirror](https://codemirror.net/) for providing an excellent code editing experience.
 - [jsPlumb](https://jsplumbtoolkit.com/) for the robust diagram connection functionality.
 - Other libraries and contributors who helped make this project possible.
-```

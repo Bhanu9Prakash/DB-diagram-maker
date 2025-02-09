@@ -3,6 +3,12 @@
 
 A web-based DB Diagram Generator with an integrated editor that allows you to define, visualize, and interact with DB diagrams. The project features robust syntax highlighting (using CodeMirror), drag‐and‐drop table positioning (powered by jsPlumb), manual version saving with an optional comment modal, file upload/download functionality, zoom controls, and PNG export.
 
+https://bhanu9prakash.github.io/DB-diagram-maker/
+
+![image](https://github.com/user-attachments/assets/9db2d27a-715e-4ed5-b6d1-b97e3725e3d0)
+
+
+
 ## Features
 
 - **Editor with Syntax Highlighting:**  
@@ -25,10 +31,6 @@ A web-based DB Diagram Generator with an integrated editor that allows you to de
 
 - **Theme Toggle & Fullscreen:**  
   Switch between dark/light themes and toggle fullscreen mode for an immersive experience.
-
-## Demo
-
-*(If you have a live demo or screenshots, add them here.)*
 
 ## Installation
 

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentTableHeader = null;
     let isFullscreen = false;
 
-        // Add these event listeners in your initialization code
+    // Add these event listeners in your initialization code
     // document.getElementById('restore-version-btn').addEventListener('click', restoreVersion);
     // document.getElementById('save-copy-btn').addEventListener('click', saveCopy);
     // document.getElementById('close-preview-btn').addEventListener('click', closePreview);
@@ -36,18 +36,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('save-version-btn').addEventListener('click', function() {
         saveState();
     });
-  
+
 
 
     document.getElementById('toggle-history-btn').addEventListener('click', toggleVersionHistory);
 
     // Use event delegation for showing color picker
-     // Use event delegation for showing color picker
-     diagramContainer.addEventListener('dblclick', function(event) {
+    // Use event delegation for showing color picker
+    diagramContainer.addEventListener('dblclick', function(event) {
         if (event.target.classList.contains('table-header')) {
             event.stopPropagation(); // Prevent the event from bubbling up
             event.preventDefault(); // Prevent any default double-click behavior
-            
+
             // Prevent jsPlumb from interpreting this as a drag start
             if (jsPlumbInstance && typeof jsPlumbInstance.setDraggable === 'function') {
                 jsPlumbInstance.setDraggable(event.target.closest('.table'), false);
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     jsPlumbInstance.setDraggable(event.target.closest('.table'), true);
                 }, 0);
             }
-            
+
             showColorPicker(event);
         }
     });
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentTableHeader = event.target;
         const rect = currentTableHeader.getBoundingClientRect();
         const containerRect = diagramContainer.getBoundingClientRect();
-        
+
         if (isFullscreen) {
             colorPicker.style.position = 'fixed';
             colorPicker.style.left = `${rect.left}px`;
@@ -74,17 +74,17 @@ document.addEventListener('DOMContentLoaded', function() {
             colorPicker.style.left = `${rect.left - containerRect.left + diagramContainer.scrollLeft}px`;
             colorPicker.style.top = `${rect.bottom - containerRect.top + diagramContainer.scrollTop + 5}px`;
         }
-        
+
         colorPicker.style.display = 'block';
     }
 
-    
+
     // Update fullscreen state
     function updateFullscreenState() {
         isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
     }
 
-    
+
 
     document.addEventListener('fullscreenchange', updateFullscreenState);
     document.addEventListener('webkitfullscreenchange', updateFullscreenState);
@@ -111,19 +111,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function applyColorToTableHeader(header, color) {
         const hexColor = rgbToHex(color);
         header.style.backgroundColor = hexColor;
-        
+
         // Add a brief highlight effect
         header.style.transition = 'all 0.3s';
         header.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
         setTimeout(() => {
             header.style.boxShadow = 'none';
         }, 300);
-    
+
         updateERCode(header.parentElement.id, hexColor);
     }
-    
-     // Modify your draggable initialization to ignore double-clicks
-     function initDraggable() {
+
+    // Modify your draggable initialization to ignore double-clicks
+    function initDraggable() {
         // Assuming you're using a library like jsPlumb for draggable functionality
         jsPlumb.draggable(jsPlumb.getSelector(".table"), {
             grid: [20, 20],
@@ -160,56 +160,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 return line;
             });
             input.value = updatedLines.join('\n');
-            
+
             // Instead of regenerating the entire diagram, just update the color in the existing table
             updateTableHeaderColor(tableId, color);
         }
     }
-    
+
     function updateTableHeaderColor(tableId, color) {
         const tableHeader = document.querySelector(`#${tableId} .table-header`);
         if (tableHeader) {
             tableHeader.style.backgroundColor = color;
         }
-        
+
         // If you're using jsPlumb, you might need to repaint the connections
         if (typeof jsPlumb !== 'undefined') {
             jsPlumb.repaintEverything();
         }
     }
-  
+
     let isResizing = false;
-  
+
     splitter.addEventListener('mousedown', (e) => {
-      isResizing = true;
-      splitter.classList.add('dragging');
+        isResizing = true;
+        splitter.classList.add('dragging');
     });
-  
+
     document.addEventListener('mousemove', (e) => {
-      if (!isResizing) return;
-  
-      const appRect = app.getBoundingClientRect();
-      let newPosition;
-  
-      if (window.innerWidth > 768) {
-        newPosition = (e.clientX - appRect.left) / appRect.width;
-      } else {
-        newPosition = (e.clientY - appRect.top) / appRect.height;
-      }
-  
-      newPosition = Math.max(0.1, Math.min(newPosition, 0.9));
-  
-      inputArea.style.flex = `${newPosition}`;
-      outputArea.style.flex = `${1 - newPosition}`;
+        if (!isResizing) return;
+
+        const appRect = app.getBoundingClientRect();
+        let newPosition;
+
+        if (window.innerWidth > 768) {
+            newPosition = (e.clientX - appRect.left) / appRect.width;
+        } else {
+            newPosition = (e.clientY - appRect.top) / appRect.height;
+        }
+
+        newPosition = Math.max(0.1, Math.min(newPosition, 0.9));
+
+        inputArea.style.flex = `${newPosition}`;
+        outputArea.style.flex = `${1 - newPosition}`;
     });
-  
+
     document.addEventListener('mouseup', () => {
-      isResizing = false;
-      splitter.classList.remove('dragging');
+        isResizing = false;
+        splitter.classList.remove('dragging');
     });
-  
+
     window.addEventListener('resize', () => {
-      inputArea.style.flex = outputArea.style.flex = '1';
+        inputArea.style.flex = outputArea.style.flex = '1';
     });
 
     window.jsPlumbInstance = jsPlumb.getInstance({
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
         EndpointHoverStyle: { fill: "#2779bd" },
         Container: "diagram"
     });
-    
+
     document.getElementById('generate-btn').addEventListener('click', generateDiagram);
     // Event listeners for the fullscreen control panel
     document.getElementById('fs-zoom-in').addEventListener('click', zoomIn);
@@ -259,8 +259,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function hasInputChanged() {
     const currentInput = document.getElementById('er-input').value;
     return currentInput !== lastSavedInput;
-  }
-  
+}
+
 
 function uploadERFile(event) {
     const file = event.target.files[0];
@@ -289,27 +289,27 @@ function downloadERFile() {
 function saveState() {
     const tables = {};
     document.querySelectorAll('.table').forEach(table => {
-      tables[table.id] = {
-        left: table.style.left,
-        top: table.style.top
-      };
+        tables[table.id] = {
+            left: table.style.left,
+            top: table.style.top
+        };
     });
-  
+
     const newState = {
-      id: Date.now(),
-      timestamp: new Date(),
-      input: document.getElementById('er-input').value,
-      tables: tables
+        id: Date.now(),
+        timestamp: new Date(),
+        input: document.getElementById('er-input').value,
+        tables: tables
     };
-  
+
     versionHistory.push(newState);
     currentVersionIndex = versionHistory.length - 1;
-  
+
     lastSavedInput = newState.input; // Record the last saved input
-  
+
     updateVersionHistoryUI();
-  }
-  
+}
+
 
 
 function updateVersionHistoryUI() {
@@ -407,14 +407,14 @@ function generateDiagram(containerId = 'diagram', jsPlumbInstance = window.jsPlu
     jsPlumbInstance.draggable(jsPlumbInstance.getSelector(".table"), {
         grid: [20, 20],
         containment: true,
-        stop: function (params) {
-          adjustDiagramSize(containerId);
-          if (containerId === 'diagram' && !currentPreviewVersion) {
-            clearTimeout(movementTimeout);
-            movementTimeout = setTimeout(saveState, 5000); // Save after 5 seconds of inactivity
-          }
+        stop: function(params) {
+            adjustDiagramSize(containerId);
+            if (containerId === 'diagram' && !currentPreviewVersion) {
+                clearTimeout(movementTimeout);
+                movementTimeout = setTimeout(saveState, 5000); // Save after 5 seconds of inactivity
+            }
         }
-      });
+    });
 
     // Create relationships
     setTimeout(() => {
@@ -427,7 +427,7 @@ function generateDiagram(containerId = 'diagram', jsPlumbInstance = window.jsPlu
 
     if (containerId === 'diagram' && !currentPreviewVersion && hasInputChanged()) {
         saveState();
-      }
+    }
 }
 
 
@@ -533,7 +533,7 @@ function createTableHtml(tableName, tableContent) {
     let html = `<div class="table" id="${tableName}">
         <div class="table-header" ${headerStyle}>${tableName}</div>
         <div class="table-content">`;
-    
+
     tableContent.fields.forEach((field, index) => {
         const options = field.options ? field.options.join(' ') : '';
         const classes = ['field'];
@@ -563,7 +563,7 @@ function createTableHtml(tableName, tableContent) {
 
 function createRelationship(rel, jsPlumbInstance) {
     let overlays = [
-        ["Label", { 
+        ["Label", {
             label: `${rel.fromField} -> ${rel.toField}`,
             cssClass: "relationship-label"
         }]
@@ -571,7 +571,7 @@ function createRelationship(rel, jsPlumbInstance) {
 
     let paintStyle = { stroke: "#3490dc", strokeWidth: 2 };
 
-    switch(rel.relationType) {
+    switch (rel.relationType) {
         case 'one-to-many':
             overlays.push(["Custom", {
                 create: function(component) {
@@ -637,7 +637,7 @@ function positionTables(containerId) {
 
     const width = (maxColumns * columnWidth) + (padding * 2);
     const height = (Math.ceil(tables.length / maxColumns) * rowHeight) + (padding * 2);
-    
+
     diagramArea.style.width = `${width}px`;
     diagramArea.style.height = `${height}px`;
 }
@@ -703,7 +703,7 @@ function exportAsPNG() {
     diagram.style.height = diagram.scrollHeight + 'px';
 
     domtoimage.toPng(diagram)
-        .then(function (dataUrl) {
+        .then(function(dataUrl) {
             const link = document.createElement('a');
             link.download = 'er-diagram.png';
             link.href = dataUrl;
@@ -712,7 +712,7 @@ function exportAsPNG() {
             // Restore original styles
             diagram.setAttribute('style', originalStyle);
         })
-        .catch(function (error) {
+        .catch(function(error) {
             console.error('Error exporting diagram as PNG:', error);
         });
 }
@@ -725,25 +725,25 @@ function toggleTheme() {
 
 function toggleFullscreen() {
     const diagramContainer = document.getElementById('diagram-container');
-  
+
     if (!document.fullscreenElement) {
-      diagramContainer.requestFullscreen().then(() => {
-        // Move fullscreen controls into the fullscreen container
-        diagramContainer.appendChild(document.getElementById('fullscreen-controls'));
-      });
+        diagramContainer.requestFullscreen().then(() => {
+            // Move fullscreen controls into the fullscreen container
+            diagramContainer.appendChild(document.getElementById('fullscreen-controls'));
+        });
     } else {
-      document.exitFullscreen().then(() => {
-        // Move fullscreen controls back to their original position
-        document.body.appendChild(document.getElementById('fullscreen-controls'));
-      });
+        document.exitFullscreen().then(() => {
+            // Move fullscreen controls back to their original position
+            document.body.appendChild(document.getElementById('fullscreen-controls'));
+        });
     }
-  }
-  
+}
+
 
 function updateVersionHistoryUI() {
     const versionList = document.getElementById('version-list');
     versionList.innerHTML = '';
-    
+
     versionHistory.forEach((version, index) => {
         const listItem = document.createElement('li');
         listItem.textContent = version.timestamp.toLocaleString();
@@ -865,7 +865,7 @@ function updateLineNumbers() {
     const input = document.getElementById('er-input');
     const lineNumbers = document.getElementById('line-numbers');
     const lines = input.value.split('\n');
-    
+
     lineNumbers.innerHTML = lines.map((_, index) => index + 1).join('<br>');
 }
 
@@ -928,18 +928,18 @@ function highlightSyntax(text) {
         }
     });
 
-    return tokens.map(token => 
+    return tokens.map(token =>
         token.class === 'plain' ? token.text : `<span class="${token.class}">${escapeHtml(token.text)}</span>`
     ).join('');
 }
 
 function escapeHtml(unsafe) {
     return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 function updateEditor() {

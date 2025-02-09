@@ -1,0 +1,29 @@
+Table users {
+  id int [pk]
+  username varchar [not null, unique]
+  email varchar [not null]
+  created_at timestamp
+}
+
+Table posts {
+  id int [pk]
+  title varchar [not null]
+  content text
+  user_id int [fk]
+  created_at timestamp
+}
+
+Ref: posts.user_id > users.id
+
+Table categories {
+  id int [pk]
+  name varchar [not null]
+}
+
+Table post_categories {
+  post_id int [fk]
+  category_id int [fk]
+}
+
+Ref: post_categories.post_id > posts.id
+Ref: post_categories.category_id > categories.id

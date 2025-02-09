@@ -1,0 +1,55 @@
+Table Author {
+  author_id int [pk]
+  name varchar
+  birth_date date
+}
+
+Table Book {
+  book_id int [pk]
+  title varchar
+  isbn varchar
+  publication_date date
+  author_id int [fk]
+}
+
+Table Library {
+  library_id int [pk]
+  name varchar
+  address varchar
+}
+
+Table BookCopy {
+  copy_id int [pk]
+  book_id int [fk]
+  library_id int [fk]
+  condition varchar
+}
+
+Table Member {
+  member_id int [pk]
+  name varchar
+  email varchar
+  join_date date
+}
+
+Table Loan {
+  loan_id int [pk]
+  copy_id int [fk]
+  member_id int [fk]
+  loan_date date
+  return_date date
+}
+
+Table LibraryCard {
+  card_id int [pk]
+  member_id int [fk]
+  issue_date date
+  expiry_date date
+}
+
+Ref: Author.author_id >- Book.author_id
+Ref: Book.book_id >- BookCopy.book_id
+Ref: Library.library_id >- BookCopy.library_id
+Ref: BookCopy.copy_id -< Loan.copy_id
+Ref: Member.member_id -< Loan.member_id
+Ref: Member.member_id -- LibraryCard.member_id
